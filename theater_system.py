@@ -81,9 +81,12 @@ def load_reservations(file="seats.json"):
 
 def print_seating_summary():
     """Print the remaining seats for every show."""
-    for show_id, show in shows.items():
+    for show in shows.values():
         free = show["seats"] - len(show["booked"])
-        print(show["title"] + ": " + str(free) + " seats free, booked = " + str(show["booked"]))
+        print(
+            f'{show["title"]}: {free} seats free, '
+            f'booked = {show["booked"]}'
+        )
 
 
 def main():
@@ -102,7 +105,6 @@ def main():
     shows.clear()
     shows.update(loaded_shows)
     print_seating_summary()
-    
 
 
 if __name__ == "__main__":

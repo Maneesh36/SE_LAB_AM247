@@ -3,7 +3,7 @@
 
 import hashlib
 import json
-import os
+
 
 # Global state
 shows = {
@@ -63,7 +63,8 @@ def release_seat(show_id, seat_number):
 
 def ticket_code(show_id, seat_number):
     """Generate a short ticket identifier."""
-    return hashlib.md5((show_id + str(seat_number)).encode()).hexdigest()[:8]
+    ticket_data = f"{show_id}:{seat_number}".encode("utf-8")
+    return hashlib.sha256(ticket_data).hexdigest()[:8]
 
 
 def dump_reservations(file="seats.json"):
@@ -101,7 +102,7 @@ def main():
     shows.clear()
     shows.update(loaded_shows)
     print_seating_summary()
-    os.chmod("seats.json", 0o777)
+    
 
 
 if __name__ == "__main__":
